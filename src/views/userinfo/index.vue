@@ -1,7 +1,8 @@
 <template>
     <div class="infoform">
         <el-page-header @back="$router.back()" content="编辑用户个人信息" class="left-align"></el-page-header>
-        <el-form style="width: 600px; margin-top: 20px" :model="infoForm" :rules="rules" ref="infoForm" label-width="100px">
+        <el-form style="width: 600px; margin-top: 20px; " :model="infoForm" :rules="rules" ref="infoForm"
+            label-width="100px">
             <el-form-item label="身份证号" prop="id">
                 <el-input v-model="infoForm.id"></el-input>
             </el-form-item>
@@ -14,37 +15,58 @@
             <el-form-item label="选择身份" prop="roles">
                 <RoleSelect v-model="infoForm.roles"></RoleSelect>
             </el-form-item>
+            <el-form-item label="上传一寸照" prop="photo">
+                <file-upload :competition="this.id" style=""></file-upload>
+            </el-form-item>
             <el-form-item>
+
                 <el-button type="primary" @click="submitForm('infoForm')">提交</el-button>
             </el-form-item>
         </el-form>
+        <div id="img" style="position: absolute;top: 250px;left: 200px;">
+        </div>
+
     </div>
 </template>
     
 <script>
 import { mapState } from 'vuex'
 import RoleSelect from "./components/RoleSelect.vue";
-import { getInfo,edit } from "@/api/user"
+import FileUpload from './components/FileUpload.vue';
+import { getInfo, edit } from "@/api/user"
 export default {
     name: "info",
     props: [],
     components: {
-        RoleSelect
+        RoleSelect,
+        FileUpload
     },
     computed: {
-    ...mapState({
-      user: state => state.user
-    })
+        ...mapState({
+            user: state => state.user
+        })
     },
-    mounted(){
-        getInfo(this.user.token).then(res=>{
-            this.infoForm={
+    mounted() {
+        getInfo(this.user.token).then(res => {
+            this.infoForm = {
                 id: res.data.id,
                 name: res.data.username,
                 phone: res.data.phone,
                 roles: res.data.roles[0],
+                imageURL: res.data.ico
             }
+            // 创建一个新的img元素
+            let img = document.createElement('img');
+            img.setAttribute('width', '100px');
+            img.setAttribute('height', '140px');
+            img.setAttribute('alt', 'User Image');
+            // 设置img元素的src属性
+            img.src = res.data.ico;
+            let div = document.getElementById('img');
+            // 将img元素添加到DOM中
+            div.appendChild(img);
         })
+
     },
     data() {
         return {
@@ -75,7 +97,7 @@ export default {
                         trigger: "blur",
                     },
                 ],
-                
+
                 roles: [
                     { required: true, message: "请选择角色", trigger: "change" },
                 ],

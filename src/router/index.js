@@ -6,7 +6,7 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 
-import bak from './bak.js'
+// import bak from './bak.js'
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -85,19 +85,19 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/gameinfo',
-    component: Layout,
-    redirect: '/gameinfo',
-    children: [
-      {
-        path: 'gameinfo',
-        component: () => import('@/views/gameinfo/index'),
-        name: 'gameinfo',
-        meta: { title: '比赛信息', icon: 'documentation', affix: true }
-      }
-    ]
-  },
+  // {
+  //   path: '/gameinfo',
+  //   component: Layout,
+  //   redirect: '/gameinfo',
+  //   children: [
+  //     {
+  //       path: 'gameinfo',
+  //       component: () => import('@/views/gameinfo/index'),
+  //       name: 'gameinfo',
+  //       meta: { title: '比赛信息', icon: 'documentation', affix: true }
+  //     }
+  //   ]
+  // },
   {
     path: '/resultcheck',
     component: Layout,
@@ -108,6 +108,19 @@ export const constantRoutes = [
         component: () => import('@/views/resultcheck/index'),
         name: 'resultcheck',
         meta: { title: '成绩查询', icon: 'documentation', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/userinfo',
+    component: Layout,
+    redirect: '/userinfo',
+    children: [
+      {
+        path: 'userinfo',
+        component: () => import('@/views/userinfo/index'),
+        name: 'userinfo',
+        meta: { title: '用户个人信息编辑', icon: 'documentation', affix: true }
       }
     ]
   },
@@ -158,39 +171,49 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-  {
-    path: '/userinfo',
-    component: Layout,
-    redirect: '/userinfo/index',
-    alwaysShow: true, // will always show the root menu
-    name: 'userinfo',
-    meta: {
-      title: '用户个人信息编辑',
-      icon: 'lock',
-      roles: ['admin', 'editor','leader','player'] // you can set roles in root nav
-    },
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/userinfo/index'),
-        name: 'userinfo',
-        meta: {
-          title: '用户个人信息编辑',
-          roles: ['admin', 'editor','leader','player'] // or you can only set roles in sub nav
-        }
-      },
-      {
-        path: 'upload',
-        component: () => import('@/views/userinfo/upload'),
-        name: 'upload',
-        meta: {
-          title: '一寸照上传',
-          roles: ['admin', 'editor','leader','player']
-          // if do not set roles, means: this page does not require permission
-        }
-      }
-    ]
-  },
+  // {
+  //   // path: '/userinfo',
+  //   // component: Layout,
+  //   // redirect: '/userinfo/index',
+  //   // alwaysShow: true,
+  //   // name: 'userinfo',
+  //   // meta: {
+  //   //     title: '用户个人信息编辑',
+  //   //     icon: 'lock',
+  //   //     roles: ['admin', 'editor','leader','player'] // you can set roles in root nav
+  //   //   },
+  //   // path: '/userinfo',
+  //   // component: Layout,
+  //   // redirect: '/userinfo/index',
+  //   // alwaysShow: true, // will always show the root menu
+  //   // name: 'userinfo',
+  //   // meta: {
+  //   //   title: '用户个人信息编辑',
+  //   //   icon: 'lock',
+  //   //   roles: ['admin', 'editor','leader','player'] // you can set roles in root nav
+  //   // },
+  //   // children: [
+  //   //   {
+  //   //     path: 'index',
+  //   //     component: () => import('@/views/userinfo/index'),
+  //   //     name: 'userinfo',
+  //   //     meta: {
+  //   //       title: '用户个人信息编辑',
+  //   //       roles: ['admin', 'editor','leader','player'] // or you can only set roles in sub nav
+  //   //     }
+  //   //   },
+  //   //   // {
+  //   //   //   path: 'upload',
+  //   //   //   component: () => import('@/views/userinfo/upload'),
+  //   //   //   name: 'upload',
+  //   //   //   meta: {
+  //   //   //     title: '一寸照上传',
+  //   //   //     roles: ['admin', 'editor','leader','player']
+  //   //   //     // if do not set roles, means: this page does not require permission
+  //   //   //   }
+  //   //   // }
+  //   // ]
+  // },
   {
     path: '/team',
     component: Layout,
@@ -231,6 +254,17 @@ export const asyncRoutes = [
           title: '队伍详情',
           roles: ['admin', 'editor','leader','player'] // or you can only set roles in sub nav
         }
+      },
+      {
+        path: 'entourage',
+        component: () => import('@/views/team/entourage'),
+        name: 'team',
+        hidden:true,
+        props: true,
+        meta: {
+          title: '随行人员',
+          roles: ['admin', 'editor','leader','player'] // or you can only set roles in sub nav
+        }
       }
     ]
   },
@@ -241,7 +275,7 @@ export const asyncRoutes = [
     alwaysShow: true, // will always show the root menu
     name: 'competition',
     meta: {
-      title: '我的比赛',
+      title: '比赛信息',
       icon: 'lock',
       roles: ['admin', 'editor','leader','player'] // you can set roles in root nav
     },

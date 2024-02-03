@@ -1,12 +1,16 @@
 <template>
   <div class="create">
     <el-page-header @back="$router.back()" content="新建赛事" class="left-align"></el-page-header>
-    <el-form style="width: 600px; margin-top: 20px" :model="createForm" :rules="rules" ref="createForm" label-width="100px">
-      <el-form-item label="赛事名" prop="name">
+    <el-form style="width: 600px; margin-top: 20px" :model="createForm" :rules="rules" ref="createForm"
+      label-width="100px">
+      <el-form-item label="赛事名称" prop="name">
         <el-input v-model="createForm.name"></el-input>
       </el-form-item>
       <el-form-item label="赛事简介" prop="information">
         <el-input v-model="createForm.information"></el-input>
+      </el-form-item>
+      <el-form-item label="赛事类型" prop="category">
+        <TypeSelect v-model="createForm.category"></TypeSelect>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('createForm')">提交</el-button>
@@ -19,18 +23,22 @@
 <script>
 
 import { createCompetition } from '@/api/competition';
+import TypeSelect from "./components/TypeSelect.vue";
 export default {
   name: "create",
   props: [],
+  components: {
+    TypeSelect,
+  },
   data() {
     return {
       createForm: {
         name: "",
-        information:"",
-        state: true
+        information: "",
+        state: true,
+        category: ""
       },
       rules: {
-
         // 对name这个字段进行校验
         name: [
           { required: true, message: "请输入赛事名", trigger: "blur" },
@@ -38,6 +46,9 @@ export default {
         information: [
           { required: true, message: "请输入赛事简介", trigger: "blur" },
         ],
+        category: [
+          { required: true, message: "请选择赛事类型", trigger: "change" },
+        ]
       },
     };
   },
@@ -47,9 +58,9 @@ export default {
         if (valid) {
           let data = { ...this.createForm }
           createCompetition(data).then((res) => {
-            if (res.code==20000) {
+            if (res.code == 20000) {
               this.$message({
-                message: '用户注册成功',
+                message: '赛事创建成功',
                 type: "success",
                 duration: 1500,
                 onClose: () => {

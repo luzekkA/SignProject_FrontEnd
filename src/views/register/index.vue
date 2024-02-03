@@ -20,7 +20,10 @@
       <el-form-item label="选择身份" prop="role" >
         <RoleSelect v-model="registerForm.role"></RoleSelect>
       </el-form-item>
-      <el-form-item>
+      <!-- <el-form-item label="上传一寸照">
+        <file-upload :userid="registerForm.id" v-model="registerForm.photo" style=""></file-upload>
+      </el-form-item > -->
+      <el-form-item >
         <el-button type="primary" @click="submitForm('registerForm')">提交</el-button>
         <el-button @click="resetForm('registerForm')">重置</el-button>
       </el-form-item>
@@ -30,12 +33,14 @@
   
 <script>
 import RoleSelect from "./components/RoleSelect.vue";
+// import FileUpload from './components/FileUpload.vue';
 import { register } from "@/api/user"
 export default {
   name: "register",
   props: [],
   components: {
-    RoleSelect
+    RoleSelect,
+    // FileUpload
   },
   data() {
     return {
@@ -98,7 +103,7 @@ export default {
         ],
         role: [
           { required: true, message: "请选择角色", trigger: "change" },
-        ],
+        ]
       },
     };
   },

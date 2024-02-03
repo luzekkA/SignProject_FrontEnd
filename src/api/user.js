@@ -42,3 +42,18 @@ export function edit(data){
     data
   })
 }
+//上传一寸照
+export function uploadFile(file,token) {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('token', token);
+  // formData.append('token', token);
+  return request({
+    url: '/user/ico',
+    method: 'post', 
+    data: formData,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    }
+  })
+}

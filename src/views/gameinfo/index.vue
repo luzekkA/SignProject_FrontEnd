@@ -1,26 +1,34 @@
 <template>
-    <div class="game-info">
-      这里是比赛信息
-    </div>
+  <div class="game-info">
+ 
+    <file-upload style="margin-top: 20px;"></file-upload>
+  </div>
 </template>
   
-  <script>
-  export default {
-    name: 'gameinfo',
-    data() {
-      return {
-        // Your data here
-      };
-    },
-    methods: {
-      // Your methods here
-    },
-    computed: {
-      // Your computed properties here
-    },
-  };
-  </script>
+<script>
+import { mapState } from 'vuex';
+import FileUpload from './components/FileUpload.vue';
+export default {
+  name: 'gameinfo',
+  data() {
+    return {
+      fileList: []
+
+    };
+  },
+  components: {
+    FileUpload,
+  },
+  methods: {
+  },
+  computed: {
+    ...mapState({
+      user: state => state.user
+    })
+  },
+};
+</script>
   
 <style scoped>
-  /* Your styles here */
+/* Your styles here */
 </style>

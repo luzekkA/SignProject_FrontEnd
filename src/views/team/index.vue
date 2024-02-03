@@ -1,20 +1,25 @@
 <template>
     <div class="good-list">
-        <el-input v-model="joinTeamViewModel.invitation" style="width: 500px" placeholder="请输入班级邀请码"></el-input>
-        <el-button type="primary" style="margin-left: 20px" @click="handleJoin(joinTeamViewModel)">加入班级</el-button>
+        <el-input v-model="joinTeamViewModel.invitation" style="width: 500px" placeholder="请输入队伍邀请码"></el-input>
+        <el-button type="primary" style="margin-left: 20px" @click="handleJoin(joinTeamViewModel)">加入队伍</el-button>
         <!-- 表格 -->
         <el-table :data="list" border style="width: 100%; margin-top: 20px">
-            <el-table-column prop="id" label="队名" align="center" sortable>
+            <el-table-column  label="队伍id" align="center" sortable>
+                <template slot-scope="{ row }">
+                    <div>{{ row.id }}</div>
+                </template>
+            </el-table-column>
+            <el-table-column  label="队名" align="center" sortable>
                 <template slot-scope="{ row }">
                     <div>{{ row.name }}</div>
                 </template>
             </el-table-column>
-            <el-table-column prop="name" label="教练员" align="center">
+            <el-table-column  label="教练员" align="center">
                 <template slot-scope="{ row }">
                     <div>{{ row.leader }}</div>
                 </template>
             </el-table-column>
-            <el-table-column prop="name" label="邀请码" align="center">
+            <el-table-column  label="邀请码" align="center">
                 <template slot-scope="{ row }">
                     <div>{{ row.invitation }}</div>
                 </template>
@@ -22,7 +27,7 @@
             <el-table-column label="操作" align="center">
                 <template slot-scope="{ row }">
                     <!-- <router-link to="/team/info"> -->
-                    <router-link :to="{ path: '/team/info', query: { teamId: row.id } }">
+                    <router-link :to="{ path: '/team/info', query: { teamId: row.id } }" @click.native="setCurrentTeamId(row.id)">
                         <el-button class="thirdparty-button" type="primary">
                             队伍详情
                         </el-button>
@@ -35,7 +40,7 @@
 </template>
   
 <script>
-import { mapState } from 'vuex'
+import { mapState,mapActions } from 'vuex'
 import { getInfo } from "@/api/user"
 import { getTeam, joinTeam } from "@/api/team"
 export default {
@@ -54,7 +59,7 @@ export default {
     computed: {
         ...mapState({
             user: state => state.user
-        })
+        }),
     },
     mounted() {
         getInfo(this.user.token).then(res => {
@@ -97,6 +102,7 @@ export default {
                 }
             })
         },
+        ...mapActions("user", ["setCurrentTeamId"]),
     },
 };
 </script>

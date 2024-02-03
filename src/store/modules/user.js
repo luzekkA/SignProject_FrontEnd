@@ -9,7 +9,7 @@ const state = {
   introduction: '',
   roles: [],
   roleList: [],
-  teamId: null
+  currentTeamId: null
 }
 
 const mutations = {
@@ -31,14 +31,15 @@ const mutations = {
   set_roleList(state, list) {
     state.roleList = list
   },
-  set_TeamId(state, id){
-    state.teamId = id
+  SET_CURRENTTEAMID(state, id){
+    state.currentTeamId = id
   }
 }
 
 const actions = {
-  setSelectedTeamId({ commit }, id) {
-    commit('SET_SELECTEDTEAMID', id);
+
+  setCurrentTeamId({ commit }, id) {
+    commit('SET_CURRENTTEAMID', id);
   },
   // user login
   login({ commit }, userInfo) {
@@ -143,6 +144,7 @@ const actions = {
       }
     })
   }
+  
 }
 
 export default {

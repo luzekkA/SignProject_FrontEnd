@@ -21,6 +21,22 @@ export function quitTeam(team) {
     })
 }
 
+export function quitTeamById(team,id){
+  return request({
+    url:'/team/deleteuser',
+    method:'delete',
+    params:{team,id}
+  })
+}
+
+export function quitTeamByPhone(team,phone){
+  return request({
+    url:'/team/deleteOther',
+    method:'delete',
+    params:{team,phone}
+  })
+}
+
 export function joinTeam(team) {
     return request({
       url: '/team/join',
@@ -42,5 +58,21 @@ export function getTeamMember(team){
     url: '/team/getuser',
     method: 'get',
     params:{team}
+  })
+}
+
+export function getEntourage(team){
+  return request({
+    url: '/team/showOther',
+    method: 'get',
+    params:{team}
+  })
+}
+
+export function addEntourage(entourage){
+  return request({
+    url: '/team/addOther',
+    method: 'post',
+    data:entourage
   })
 }
